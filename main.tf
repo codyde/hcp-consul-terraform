@@ -16,6 +16,12 @@ resource "consul_intention" "fe-api-allow" {
       action           = "allow"
     }
 
+resource "consul_intention" "api-db-allow" {
+        source_name      = "api"
+        destination_name = "db"
+        action           = "allow"
+      }
+
 resource "consul_config_entry" "frontend" {
       name = "frontend"
       kind = "service-defaults"
