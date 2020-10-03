@@ -14,9 +14,9 @@ resource "consul_service" "hcpgsql" {
 resource "consul_node" "hcpgsql" {
   name    = "hcpgsql"
   address = "hcpgsql.cbjb8qnvkuc9.us-west-2.rds.amazonaws.com"
-  meta {
-    external-node = "true"
-    external-probe = "true"
+  meta = {
+    "external-node" = "true"
+    "external-probe" = "true"
     }
 }
 
