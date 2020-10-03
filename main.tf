@@ -4,6 +4,22 @@ provider "consul" {
   token      = var.token
 }
 
+resource "consul_service" "hcpgsql" {
+  name    = "hcpgsql"
+  node    = "${consul_node.hcpgsql.name}"
+  port    = 5432
+  tags    = ["external"]
+}
+
+resource "consul_node" "hcpgsql" {
+  name    = "hcpgsql"
+  address = "hcpgsql.cbjb8qnvkuc9.us-west-2.rds.amazonaws.com"
+  meta {
+    external-node = "true"
+    external-probe = "true"
+    }
+}
+
 resource "consul_intention" "fe-igw-allow" {
     source_name      = "ingress-gateway"
     destination_name = "frontend"
@@ -50,3 +66,5 @@ resource "consul_config_entry" "ingress" {
     ]
     })
     }
+
+
