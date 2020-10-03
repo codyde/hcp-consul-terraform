@@ -38,6 +38,36 @@ resource "consul_intention" "api-db-allow" {
         action           = "allow"
       }
 
+resource "consul_config_entry" "frontend" {
+  name = "frontend"
+  kind = "service-defaults"
+
+  config_json = jsonencode({
+    Protocol    = "http"
+  })
+}
+
+resource "consul_config_entry" "ingress_gateway" {
+    name = "ingress-gateway"
+    kind = "ingress-gateway"
+
+    config_json = jsonencode({
+        TLS = {
+            Enabled = true
+        }
+        Listeners = [{
+            Port     = 8080
+            Protocol = "http"
+            Services = [
+              { 
+                Name  = "frontend"
+                Hosts = [*] 
+                }
+              ]
+        }]
+    })
+}
+
 resource "consul_config_entry" "terminating_gateway" {
     name = "terminating-gateway"
     kind = "terminating-gateway"
