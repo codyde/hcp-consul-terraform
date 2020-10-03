@@ -61,7 +61,6 @@ resource "consul_config_entry" "ingress_gateway" {
             Services = [
               { 
                 Name  = "frontend"
-                Hosts = [*] 
                 }
               ]
         }]
