@@ -38,16 +38,12 @@ resource "consul_intention" "api-db-allow" {
         action           = "allow"
       }
 
-resource "consul_config_entry" "terminating" {
-  kind = "terminating-gateway"
-  name = "terminating-gateway"
-  
-  config_json = jsonencode({
-    Services = [
- {
-   Name = "example-https"
-   CAFile = "/etc/ssl/cert.pem"
- }
-]
-  }
+resource "consul_config_entry" "terminating_gateway" {
+    name = "terminating-gateway"
+    kind = "terminating-gateway"
+
+    config_json = jsonencode({
+        Services = [{ Name = "hcpgsql" }]
+    })
+}
     }
