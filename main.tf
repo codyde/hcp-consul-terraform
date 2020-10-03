@@ -67,4 +67,16 @@ resource "consul_config_entry" "ingress" {
     })
     }
 
-
+resource "consul_config_entry" "terminating" {
+  kind = "terminating-gateway"
+  name = "terminating-gateway"
+  
+  config_json = jsonencode({
+    Services = [
+ {
+   Name = "example-https"
+   CAFile = "/etc/ssl/cert.pem"
+ }
+]
+  }
+    }
