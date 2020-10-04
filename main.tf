@@ -4,15 +4,6 @@ provider "consul" {
   token      = var.token
 }
 
-resource "consul_acl_policy" "hcpgsql-policy" {
-  name        = "hcpgsql-policy"
-  rules       = <<-RULE
-    node_prefix "hcpgsql" {
-      policy = "write"
-    }
-    RULE
-}
-
 resource "consul_service" "hcpgsql" {
   name    = "hcpgsql"
   node    = "${consul_node.awsrdspg.name}"
@@ -22,7 +13,7 @@ resource "consul_service" "hcpgsql" {
 
 resource "consul_node" "awsrdspg" {
   name    = "awsrdspg"
-  address = "172.31.36.61"
+  address = "hcpgsql.cbjb8qnvkuc9.us-west-2.rds.amazonaws.com"
   meta = {
     "external-node" = "true"
     "external-probe" = "true"
