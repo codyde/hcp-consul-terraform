@@ -43,7 +43,7 @@ resource "consul_intention" "fe-api-allow" {
 
 resource "consul_intention" "api-db-allow" {
         source_name      = "api"
-        destination_name = "db"
+        destination_name = "hcpgsql"
         action           = "allow"
       }
 
