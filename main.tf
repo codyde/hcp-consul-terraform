@@ -15,13 +15,13 @@ resource "consul_acl_policy" "hcpgsql-policy" {
 
 resource "consul_service" "hcpgsql" {
   name    = "hcpgsql"
-  node    = "${consul_node.hcpgsql.name}"
+  node    = "${consul_node.awsrdspg.name}"
   port    = 5432
   tags    = ["external"]
 }
 
-resource "consul_node" "hcpgsql" {
-  name    = "hcpgsql"
+resource "consul_node" "awsrdspg" {
+  name    = "awsrdspg"
   address = "172.31.36.61"
   meta = {
     "external-node" = "true"
