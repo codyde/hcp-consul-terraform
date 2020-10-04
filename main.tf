@@ -57,7 +57,7 @@ resource "consul_config_entry" "frontend" {
 }
 
 resource "consul_config_entry" "ingress" {
-      depends_on = consul_config_entry.frontend
+      depends_on = [consul_config_entry.frontend]
       kind = "ingress-gateway"
       name = "ingress-gateway"
 
