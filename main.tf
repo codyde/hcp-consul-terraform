@@ -13,7 +13,7 @@ resource "consul_service" "hcpgsql" {
 
 resource "consul_node" "awsrdspg" {
   name    = "awsrdspg"
-  address = "hcpgsql.cbjb8qnvkuc9.us-west-2.rds.amazonaws.com"
+  address = "172.31.36.61"
   meta = {
     "external-node" = "true"
     "external-probe" = "true"
