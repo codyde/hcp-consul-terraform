@@ -4,6 +4,15 @@ provider "consul" {
   token      = var.token
 }
 
+resource "consul_acl_policy" "hcpgsql-policy" {
+  name        = "hcpgsql-policy"
+  rules       = <<-RULE
+    node_prefix "hcpgsql" {
+      policy = "write"
+    }
+    RULE
+}
+
 resource "consul_service" "hcpgsql" {
   name    = "hcpgsql"
   node    = "${consul_node.hcpgsql.name}"
