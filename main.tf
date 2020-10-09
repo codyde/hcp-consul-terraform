@@ -4,3 +4,4 @@ provider "consul" {
   token      = var.token
 }
 
+
