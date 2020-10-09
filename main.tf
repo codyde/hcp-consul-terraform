@@ -154,5 +154,3 @@ resource "consul_config_entry" "frontend_splitter" {
     ]
   })
 }
-
-
