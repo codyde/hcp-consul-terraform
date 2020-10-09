@@ -74,42 +74,6 @@ resource "consul_config_entry" "frontend_splitter" {
   config_json = jsonencode({
     Splits = [
       {
-        Weight        = 90
-        ServiceSubset = "v1"
-      },
-      {
-        Weight        = 10
-        ServiceSubset = "v2"
-      },
-    ]
-  })
-}
-
-resource "consul_config_entry" "frontend_resolver" {
-  kind = "service-resolver"
-  name = consul_config_entry.frontend.name
-
-  config_json = jsonencode({
-    DefaultSubset = "v1"
-
-    Subsets = {
-      "v1" = {
-        Filter = "Service.Meta.version == v1"
-      }
-      "v2" = {
-        Filter = "Service.Meta.version == v2"
-      }
-    }
-  })
-}
-
-resource "consul_config_entry" "frontend_splitter" {
-  kind = "service-splitter"
-  name = consul_config_entry.frontend_resolver.name
-
-  config_json = jsonencode({
-    Splits = [
-      {
         Weight        = 0
         ServiceSubset = "v1"
       },
