@@ -9,7 +9,7 @@ resource "consul_config_entry" "api_resolver" {
   name = consul_config_entry.api.name
 
   config_json = jsonencode({
-    DefaultSubset = "v1"
+    DefaultSubset = "v2"
 
     Subsets = {
       "v1" = {
@@ -29,11 +29,11 @@ resource "consul_config_entry" "api_splitter" {
   config_json = jsonencode({
     Splits = [
       {
-        Weight        = 50
+        Weight        = 0
         ServiceSubset = "v1"
       },
       {
-        Weight        = 50
+        Weight        = 100
         ServiceSubset = "v2"
       },
     ]
@@ -45,7 +45,7 @@ resource "consul_config_entry" "frontend_resolver" {
   name = consul_config_entry.frontend.name
 
   config_json = jsonencode({
-    DefaultSubset = "v1"
+    DefaultSubset = "v2"
 
     Subsets = {
       "v1" = {
