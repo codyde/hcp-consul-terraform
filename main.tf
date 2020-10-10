@@ -4,6 +4,45 @@ provider "consul" {
   token      = var.token
 }
 
+resource "consul_service" "db" {
+  name    = "db"
+  node    = consul_node.awsrdspg.name
+  port    = 5432
+  tags    = ["external"]
+}
+
+resource "consul_node" "awsrdspg" {
+  name    = "awsrdspg"
+  address = "172.31.36.61"
+  meta = {
+    "external-node" = "true"
+    "external-probe" = "true"
+    }
+}
+
+resource "consul_intention" "api-db-allow" {
+        source_name      = "api"
+        destination_name = "db"
+        action           = "allow"
+      }
+
+resource "consul_config_entry" "terminating_gateway" {
+    name = "terminating-gateway"
+    kind = "terminating-gateway"
+
+    config_json = jsonencode({
+        Services = [{ Name = "db" }]
+    })
+  }
+
+resource "consul_config_entry" "api" {
+  name = "api"
+  kind = "service-defaults"
+
+  config_json = jsonencode({
+    Protocol    = "http"
+  })
+  }
 
 resource "consul_intention" "fe-igw-allow" {
     source_name      = "ingress-gateway"
