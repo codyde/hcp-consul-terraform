@@ -88,7 +88,7 @@ resource "consul_node" "awsrdspg" {
   address = "172.31.36.61"
   meta = {
     "external-node" = "true"
-    "external-probe" = "true"
+    "external-probe" = "false"
     }
 }
 
