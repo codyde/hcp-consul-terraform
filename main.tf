@@ -76,7 +76,6 @@ provider "consul" {
 //   })
 // }
 
-
 resource "consul_service" "db" {
   name    = "db"
   node    = consul_node.awsrdspg.name
